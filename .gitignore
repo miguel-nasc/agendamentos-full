@@ -23,3 +23,10 @@
 hs_err_pid*
 replay_pid*
 
+
+.idea
+.env
+.vscode
+logs/
+target/
+
