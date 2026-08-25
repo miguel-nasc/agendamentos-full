@@ -1,0 +1,42 @@
+services:
+  api:
+    build: .
+    env_file:
+      - .env
+    container_name: agendamentos-api
+    ports:
+      - "127.0.0.1:8413:8080"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_URL=${DB_URL:-jdbc:postgresql://db:5432/${DB_NAME}}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRE_LENGTH=${JWT_EXPIRE_LENGTH}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15-alpine
+    container_name: agendamentos-db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME:-agendamentos}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "5430:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
