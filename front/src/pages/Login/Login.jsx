@@ -175,7 +175,7 @@ function Login() {
             {/* LINK PARA CADASTRO */}
             <div className="mt-6 text-center text-xs text-[#737373] dark:text-[#A3A3A3] border-t border-[#E5E5E5] dark:border-[#2A2A2A] pt-5">
               Ainda não tem uma conta?{' '}
-              <a href="/cadastrar" className="text-[#171717] dark:text-white font-bold hover:underline">
+              <a href="/signup" className="text-[#171717] dark:text-white font-bold hover:underline">
                 Cadastre-se aqui
               </a>
             </div>
